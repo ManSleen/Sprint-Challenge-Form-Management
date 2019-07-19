@@ -15,6 +15,11 @@ const App = () => {
     setActiveItem(name);
   };
 
+  const logOut = name => {
+    setActiveItem("home");
+    localStorage.removeItem("token");
+  };
+
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
       {...rest}
@@ -59,6 +64,16 @@ const App = () => {
           onClick={handleItemClick}
         >
           Access Restricted Area
+        </Menu.Item>
+        <Menu.Item
+          position="right"
+          as={Link}
+          to="/"
+          name="logout"
+          active={activeItem === "logout"}
+          onClick={logOut}
+        >
+          Log Out
         </Menu.Item>
       </Menu>
       <div />

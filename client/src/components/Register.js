@@ -82,7 +82,9 @@ const Register = (props, { isSubmitting }) => {
                 </p>
               ) : null}
 
-              <Button>Submit &rarr;</Button>
+              <Button type="submit" color="blue">
+                Submit &rarr;
+              </Button>
               {isSubmitting && "Loading!"}
             </Form>
           );
