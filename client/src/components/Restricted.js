@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../authorization/axiosWithAuth";
-import { Card, Icon, Image } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 
 const Restricted = () => {
   const [restrictedData, setRestrictedData] = useState([]);

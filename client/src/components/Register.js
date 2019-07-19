@@ -58,9 +58,13 @@ const Register = (props, { isSubmitting }) => {
                 autoComplete="off"
                 placeholder="Username"
                 onChange={handleChange}
-                width="4"
+                width="5"
               />
-              {errors.username ? <p>{errors.username}</p> : null}
+              {errors.username && touched.username ? (
+                <p style={{ marginBottom: "20px", color: "red" }}>
+                  {errors.username}
+                </p>
+              ) : null}
 
               <Form.Field
                 label="Password"
@@ -70,9 +74,13 @@ const Register = (props, { isSubmitting }) => {
                 autoComplete="off"
                 placeholder="Password"
                 onChange={handleChange}
-                width="4"
+                width="5"
               />
-              {errors.password ? <p>{errors.password}</p> : null}
+              {errors.password && touched.password ? (
+                <p style={{ marginBottom: "20px", color: "red" }}>
+                  {errors.password}
+                </p>
+              ) : null}
 
               <Button>Submit &rarr;</Button>
               {isSubmitting && "Loading!"}
