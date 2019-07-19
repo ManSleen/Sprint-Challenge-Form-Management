@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link, Redirect } from "react-router-dom";
 import { Container, Menu } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
@@ -14,6 +14,20 @@ const App = () => {
   const handleItemClick = (e, { name }) => {
     setActiveItem(name);
   };
+
+  const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={props =>
+        localStorage.getItem("token") ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/register" />
+        )
+      }
+    />
+  );
+
   return (
     <Container>
       <Menu inverted color="green">
@@ -50,7 +64,7 @@ const App = () => {
       <div />
       <Route exact path="/" component={Home} />
       <Route path="/register" render={props => <Register {...props} />} />
-      <Route path="/restricted" render={props => <Restricted {...props} />} />
+      <PrivateRoute path="/restricted" component={Restricted} />
     </Container>
   );
 };

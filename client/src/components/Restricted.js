@@ -19,28 +19,31 @@ const Restricted = () => {
       .catch(err => console.log(err));
   }, []);
   return (
-    <div style={{ display: "flex", flexFlow: "row wrap" }}>
-      <Card.Group centered>
-        {restrictedData.map(food => (
-          <Card>
-            <Card.Content>
-              <Card.Header>{food.name}</Card.Header>
-              <Card.Meta>{food.course}</Card.Meta>
-              <Card.Description>
-                Technique: {food.technique}
-                <br />
-                <br />
-                Ingredients:
-                <ul>
-                  {food.ingredients.map(ing => (
-                    <li>{ing}</li>
-                  ))}
-                </ul>
-              </Card.Description>
-            </Card.Content>
-          </Card>
-        ))}
-      </Card.Group>
+    <div>
+      <h1 style={{ textAlign: "center" }}>Welcome to the ThunderDome!</h1>
+      <div style={{ display: "flex", flexFlow: "row wrap" }}>
+        <Card.Group centered>
+          {restrictedData.map(food => (
+            <Card>
+              <Card.Content>
+                <Card.Header>{food.name}</Card.Header>
+                <Card.Meta>{food.course}</Card.Meta>
+                <Card.Description>
+                  Technique: {food.technique}
+                  <br />
+                  <br />
+                  Ingredients:
+                  <ul>
+                    {food.ingredients.map(ing => (
+                      <li>{ing}</li>
+                    ))}
+                  </ul>
+                </Card.Description>
+              </Card.Content>
+            </Card>
+          ))}
+        </Card.Group>
+      </div>
     </div>
   );
 };

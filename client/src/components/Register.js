@@ -36,7 +36,7 @@ const Register = (props, { isSubmitting }) => {
             .then(res => {
               console.log(res);
               setValue(res.data.token);
-              props.history.push("/");
+              props.history.push("/restricted");
             })
             .catch(err => console.log(err));
         }}
