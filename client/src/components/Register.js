@@ -2,10 +2,13 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Button, Form, Input } from "semantic-ui-react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 import { axiosWithAuth } from "../authorization/axiosWithAuth";
 
 const Register = (props, { isSubmitting }) => {
+  const [storedValue, setValue] = useLocalStorage("token");
+
   return (
     <Formik
       initialValues={{
@@ -19,11 +22,8 @@ const Register = (props, { isSubmitting }) => {
         return axiosWithAuth()
           .post(url, values)
           .then(res => {
-            console.log(res);
-            {
-              /* localStorage.setItem("token", res.data.payload);
-            props.history.push("/friends-list"); */
-            }
+            setValue(res.data.token);
+            props.history.push("/");
           })
           .catch(err => console.log(err));
       }}
