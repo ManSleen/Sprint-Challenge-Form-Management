@@ -6,65 +6,81 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 
 import { axiosWithAuth } from "../authorization/axiosWithAuth";
 
+const RegisterSchema = Yup.object().shape({
+  username: Yup.string()
+    .min(3, "Your username must be at least 3 characters!")
+    .required("Username is required!"),
+  password: Yup.string()
+    .min(3, "Your password must be at least 3 characters!")
+    .required("Password is required!")
+});
+
 const Register = (props, { isSubmitting }) => {
   const [storedValue, setValue] = useLocalStorage("token");
 
   return (
-    <Formik
-      initialValues={{
-        username: "",
-        password: ""
-      }}
-      onSubmit={(values, actions) => {
-        actions.setSubmitting(true);
-        console.log(values);
-        const url = "/register";
-        return axiosWithAuth()
-          .post(url, values)
-          .then(res => {
-            setValue(res.data.token);
-            props.history.push("/");
-          })
-          .catch(err => console.log(err));
-      }}
-      render={props => {
-        return (
-          <Form
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center"
-            }}
-            onSubmit={props.handleSubmit}
-          >
-            <Form.Field
-              label="Username"
-              control={Input}
-              type="text"
-              name="username"
-              autoComplete="off"
-              placeholder="Username"
-              onChange={props.handleChange}
-              width="4"
-            />
+    <div style={{ width: "50vw", margin: "0 auto" }}>
+      <h1 style={{ textAlign: "center" }}>Register New User</h1>
+      <Formik
+        initialValues={{
+          username: "",
+          password: ""
+        }}
+        validationSchema={RegisterSchema}
+        onSubmit={(values, actions) => {
+          actions.setSubmitting(true);
+          console.log(values);
+          const url = "/register";
+          return axiosWithAuth()
+            .post(url, values)
+            .then(res => {
+              console.log(res);
+              setValue(res.data.token);
+              props.history.push("/");
+            })
+            .catch(err => console.log(err));
+        }}
+        render={({ touched, errors, handleSubmit, handleChange }) => {
+          return (
+            <Form
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"
+              }}
+              onSubmit={handleSubmit}
+            >
+              <Form.Field
+                label="Username"
+                control={Input}
+                type="text"
+                name="username"
+                autoComplete="off"
+                placeholder="Username"
+                onChange={handleChange}
+                width="4"
+              />
+              {errors.username ? <p>{errors.username}</p> : null}
 
-            <Form.Field
-              label="Password"
-              control={Input}
-              type="password"
-              name="password"
-              autoComplete="off"
-              placeholder="Password"
-              onChange={props.handleChange}
-              width="4"
-            />
+              <Form.Field
+                label="Password"
+                control={Input}
+                type="password"
+                name="password"
+                autoComplete="off"
+                placeholder="Password"
+                onChange={handleChange}
+                width="4"
+              />
+              {errors.password ? <p>{errors.password}</p> : null}
 
-            <Button>Submit &rarr;</Button>
-            {isSubmitting && "Loading!"}
-          </Form>
-        );
-      }}
-    />
+              <Button>Submit &rarr;</Button>
+              {isSubmitting && "Loading!"}
+            </Form>
+          );
+        }}
+      />
+    </div>
   );
 };
 

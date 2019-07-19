@@ -1,7 +1,7 @@
 import React from "react";
 
 const Home = () => {
-  return <div>You are Home!</div>;
+  return <h1 style={{ textAlign: "center" }}>Welcome to Your Food App!</h1>;
 };
 
 export default Home;
